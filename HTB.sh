@@ -113,7 +113,7 @@ awk '{if($1==0) name =$2; else name = $1 ; if($3>$4)print name>"paternal.reads";
 wait
 
 #### 05 extract_reads.sh
-seqtk=/share/app/seqtk/1.3/seqtk
+
 awk '{print $1"/1"}' paternal.reads > paternal.reads_1 &
 awk '{print $1"/2"}' paternal.reads > paternal.reads_2 &
 
