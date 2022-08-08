@@ -1,5 +1,6 @@
 # HicTrioBinning
 A multithread pipeline to bin Hi-C reads for trios.
+![T2T](https://user-images.githubusercontent.com/38022049/183343090-93e02d5f-8306-4d40-b601-91ecb52607f5.png)
 
 * Instruction:
 ---------------------------------------------------------------------------
