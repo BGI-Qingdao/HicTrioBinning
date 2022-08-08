@@ -1,5 +1,5 @@
 # HicTrioBinning
-A simply pipeline to identify the HiC reads to paternal and maternal.
+A simply pipeline to trio binning the HiC reads to paternal and maternal.
 
 * help doc:
 ---------------------------------------------------------------------------
