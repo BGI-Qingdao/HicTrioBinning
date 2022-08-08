@@ -37,6 +37,7 @@ Option:
 		-N < thread number : 20 (default) > 
 		-B < path to installed bwa > 
 		-S < path to installed seqtk > 
+		-O < /path/to/output >
 		-h <help> 
 ---------------------------------------------------------------------------
 [bwa github](https://github.com/lh3/bwa) 
