@@ -20,8 +20,9 @@ Option:
 		-S < path to installed seqtk > 
 		-h <help> 
 ---------------------------------------------------------------------------
-[bwa](https://github.com/lh3/bwa) 
-[seqtk](https://github.com/lh3/seqtk)
+[bwa github](https://github.com/lh3/bwa) 
+
+[seqtk github](https://github.com/lh3/seqtk)
 
 
 example CMD line: 
