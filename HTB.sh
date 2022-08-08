@@ -8,16 +8,15 @@ Usage:
 		-1 Input_Hi-C_R1.fq.gz -2 Input_Hi-C_R2.fq.gz -N 10 -B /path/to/bwa \
 		-S /path/to/seqtk -O /path/to/output/ -I 1
 Option:
-		-I < assembly hap reference index: 1|0>
-		-M < maternal assembly hap fasta >
-		-P < paternal assembly hap fasta >
-		-1 < HiC Read R1 >
-		-2 < HiC Read R2 >
-		-N < thread number : 20 >
-		-B < /path/to/bwa >
-		-S < /path/to/seqtk >
-		-O < /path/to/output >
-		-h <help>
+		-I < bwa indices of haplotype assemblies: 1|0 > 
+		-M < input draft maternal-specific haplotype assembly of the child > 
+		-P < input draft paternal-specific haplotype assembly of the child > 
+		-1 < hybrid Hi-C Reads R1 of the child > 
+		-2 < hybrid Hi-C Reads R2 of the child > 
+		-N < thread number : 20 (default) > 
+		-B < path to installed bwa > 
+		-S < path to installed seqtk > 
+		-h <help> 
 EOF
 }
 
