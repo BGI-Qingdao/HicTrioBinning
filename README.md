@@ -5,8 +5,8 @@ A pipeline to bin Hi-C reads for trios.
 ---------------------------------------------------------------------------
 Usage: 
 
-		/usr/bin/bash HTB.sh -M MF2_MAT.fasta -P MF2_PAT.fasta \
-		-1 MF2_R1.fq.gz -2 MF2_R2.fq.gz -N 10 -B /paht/to/bwa \
+		/usr/bin/bash HTB.sh -M MF2_MAT_conitg.fasta -P MF2_PAT_contig.fasta \
+		-1 ./MF2_Hi-C_R1.fq.gz -2 ./MF2_Hi-C_R2.fq.gz -N 10 -B /paht/to/bwa \
 		-S /path/to/seqtk  -I 1 
 Option: 
 
@@ -15,7 +15,7 @@ Option:
 		-P < input draft paternal-specific haplotype assembly > 
 		-1 < hybrid Hi-C Reads R1 > 
 		-2 < hybrid Hi-C Reads R2 > 
-		-N < thread number : 20 > 
+		-N < thread number : 20 (default) > 
 		-B < path to bwa https://github.com/lh3/bwa > 
 		-S < /path to seqtk https://github.com/lh3/seqtk> 
 		-h <help> 
