@@ -18,8 +18,8 @@ Output:
 		
 Dependencies:	
 
-		1. BWA
-		2. Seqkit
+		1. BWA [bwa github](https://github.com/lh3/bwa) 
+		2. Seqkit [seqtk github](https://github.com/lh3/seqtk)
 		
 Usage: 
 
@@ -40,10 +40,6 @@ Option:
 		-O < /path/to/output >
 		-h <help> 
 ---------------------------------------------------------------------------
-[bwa github](https://github.com/lh3/bwa) 
-
-[seqtk github](https://github.com/lh3/seqtk)
-
 
 example CMD line: 
 
