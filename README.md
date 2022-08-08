@@ -1,6 +1,21 @@
 # HicTrioBinning
 A simply pipeline to identify the HiC reads to paternal and maternal.
 
+help doc:
+
+Usage:
+		Input file list
+Option:
+		-I < assembly hap reference index: 1|0 >
+		-M < maternal assembly hap fasta >
+		-P < paternal assembly hap fasta >
+		-1 < HiC Read R1 >
+		-2 < HiC Read R2 >
+		-N < thread number : 20 >
+		-B < /path/to/bwa >
+		-S < /path/to/seqtk >
+		-h <help>
+
 example CMD line:
 Please set -I with 1 to bwa index the reference when first launch the shell.
 
