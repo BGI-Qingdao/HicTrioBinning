@@ -16,11 +16,14 @@ Option:
 		-1 < hybrid Hi-C Reads R1 > 
 		-2 < hybrid Hi-C Reads R2 > 
 		-N < thread number : 20 (default) > 
-		-B < path to bwa https://github.com/lh3/bwa > 
-		-S < /path to seqtk https://github.com/lh3/seqtk> 
+		-B < path to installed bwa > 
+		-S < path to installed seqtk > 
 		-h <help> 
 ---------------------------------------------------------------------------
- 
+[bwa](https://github.com/lh3/bwa) 
+[seqtk](https://github.com/lh3/seqtk)
+
+
 example CMD line: 
 
 * Please set -I to 1 if you donot have bwa indices for the two haplotype assemblies. 
