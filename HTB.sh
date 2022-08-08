@@ -5,7 +5,7 @@ helpdoc(){
 Usage:
 		/usr/bin/bash HTB.sh -M MF2_MAT.fasta -P MF2_PAT.fasta \\
 		-1 MF2_R1.fq.gz -2 MF2_R2.fq.gz -N 10 -B /paht/to/bwa \\
-		-S /path/to/seqtk  -I 1 
+		-S /path/to/seqtk -O /path/to/output/ -I 1 
 Option:
 		-I < assembly hap reference index: 1|0>
 		-M < maternal assembly hap fasta >
@@ -87,7 +87,7 @@ cut -f 1,2,3,6,12 HiC_PAT_MAP.R2.sam | perl -ane  \
 > HiC_PAT_MAP.R2.Info &
 wait
 
-rm -f HiC_MAT_MAP.R1.sam HiC_MAT_MAP.R2.sam HiC_PAT_MAP.R1.sam HiC_PAT_MAP.R2.sam
+rm -rf HiC_MAT_MAP.R1.sam HiC_MAT_MAP.R2.sam HiC_PAT_MAP.R1.sam HiC_PAT_MAP.R2.sam
 
 #### 02 get_read_score.sh
 awk 'BEGIN{name="";chr="";score=0;}{ if(NR>=1){ n=$1; chr=$3;if(n!=name && name!=""){printf("%s\t%s\t%f\n",name,ref,score);score=0;} name=n;if($2<256){ref=$3;score=(3*(log($4)/log(10))+(log($6)/log(10)) );} } }' \
