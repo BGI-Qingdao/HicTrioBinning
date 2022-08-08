@@ -87,7 +87,7 @@ cut -f 1,2,3,6,12 HiC_PAT_MAP.R2.sam | perl -ane  \
 > HiC_PAT_MAP.R2.Info &
 wait
 
-#rm -rf HiC_MAT_MAP.R1.sam HiC_MAT_MAP.R2.sam HiC_PAT_MAP.R1.sam HiC_PAT_MAP.R2.sam
+rm -rf HiC_MAT_MAP.R1.sam HiC_MAT_MAP.R2.sam HiC_PAT_MAP.R1.sam HiC_PAT_MAP.R2.sam
 
 #### 02 get_read_score.sh
 awk 'BEGIN{name="";chr="";score=0;}{ if(NR>=1){ n=$1; chr=$3;if(n!=name && name!=""){printf("%s\t%s\t%f\n",name,ref,score);score=0;} name=n;if($2<256){ref=$3;score=(3*(log($4)/log(10))+(log($6)/log(10)) );} } }' \
