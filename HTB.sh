@@ -3,8 +3,8 @@
 helpdoc(){
 		cat<<EOF
 Usage:
-		/usr/bin/bash HTB.sh -M MF2_MAT.fasta -P MF2_PAT.fasta \
-		-1 MF2_R1.fq.gz -2 MF2_R2.fq.gz -N 10 -B /paht/to/bwa \
+		/usr/bin/bash HTB.sh -M MF2_MAT.fasta -P MF2_PAT.fasta \\
+		-1 MF2_R1.fq.gz -2 MF2_R2.fq.gz -N 10 -B /paht/to/bwa \\
 		-S /path/to/seqtk  -I 1 
 Option:
 		-I < assembly hap reference index: 1|0>
