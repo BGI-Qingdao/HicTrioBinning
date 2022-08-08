@@ -5,7 +5,7 @@ helpdoc(){
 Usage:
 		Input file list
 Option:
-		-I < assembly hap reference index: 1|0>
+		-I < assembly hap reference index: 1|0 >
 		-M < maternal assembly hap fasta >
 		-P < paternal assembly hap fasta >
 		-1 < HiC Read R1 >
