@@ -20,7 +20,7 @@ Dependencies:
 		
 Usage: 
 
-		/usr/bin/bash HTB.sh -M MF2_MAT_conitg.fasta -P Input_PAT_contig.fasta \
+		/usr/bin/bash HTB.sh -M Input_MAT_conitg.fasta -P Input_PAT_contig.fasta \
 		-1 Input_Hi-C_R1.fq.gz -2 Input_Hi-C_R2.fq.gz -N 10 -B /path/to/bwa \
 		-S /path/to/seqtk -O /path/to/output/ -I 1
 		
