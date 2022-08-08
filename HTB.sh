@@ -7,7 +7,7 @@ Usage:
 		-1 MF2_R1.fq.gz -2 MF2_R2.fq.gz -N 10 -B /paht/to/bwa \
 		-S /path/to/seqtk  -I 1 
 Option:
-		-I < assembly hap reference index: 1|0 >
+		-I < assembly hap reference index: 1|0>
 		-M < maternal assembly hap fasta >
 		-P < paternal assembly hap fasta >
 		-1 < HiC Read R1 >
@@ -15,11 +15,12 @@ Option:
 		-N < thread number : 20 >
 		-B < /path/to/bwa >
 		-S < /path/to/seqtk >
+		-O < /path/to/output >
 		-h <help>
 EOF
 }
 
-while getopts ":I:M:P:1:2:N:B:S:h" opt
+while getopts ":I:M:P:1:2:N:B:S:O:h" opt
 do
 
 	echo $opt $OPTARG;
@@ -36,6 +37,8 @@ do
 		B)bwa=$OPTARG;;
 		S)seqtk=$OPTARG;;
 
+		O)outdir=$OPTARG;;
+
 		h|help) helpdoc exit 1 ;;
 		?) echo "$OPTARG Unknown parameter"
 		exit 1;;
@@ -48,7 +51,8 @@ then
 	exit 1
 fi
 
-echo "HiC Trio Binning End: `date`"
+echo "Hi-C Trio Binning End: `date`"
+mkdir $outdir && cd $outdir
 
 #### 00 get map quality
 if [ $Index = 1 ]
@@ -81,8 +85,9 @@ cut -f 1,2,3,6,12 HiC_PAT_MAP.R1.sam | perl -ane  \
 cut -f 1,2,3,6,12 HiC_PAT_MAP.R2.sam | perl -ane  \
 'if(/NM:i:(\d+)/){ $n=$1;$m=$g=$o=0;$m+=$1 while/(\d+)M/g;$g+=$1,++$o while/(\d+)[ID]/g; chomp ;@a=split;print($a[0],"\t",$a[1],"\t",$a[2], "\t", 1-($n-$g+$o)/($m+$o) ,"\t",($m+$o)-($n-$g+$o),  "\t",($m+$o),"\n")}' \
 > HiC_PAT_MAP.R2.Info &
-
 wait
+
+rm -f HiC_MAT_MAP.R1.sam HiC_MAT_MAP.R2.sam HiC_PAT_MAP.R1.sam HiC_PAT_MAP.R2.sam
 
 #### 02 get_read_score.sh
 awk 'BEGIN{name="";chr="";score=0;}{ if(NR>=1){ n=$1; chr=$3;if(n!=name && name!=""){printf("%s\t%s\t%f\n",name,ref,score);score=0;} name=n;if($2<256){ref=$3;score=(3*(log($4)/log(10))+(log($6)/log(10)) );} } }' \
@@ -113,7 +118,7 @@ awk '{if($1==0) name =$2; else name = $1 ; if($3>$4)print name>"paternal.reads";
 wait
 
 #### 05 extract_reads.sh
-
+seqtk=/share/app/seqtk/1.3/seqtk
 awk '{print $1"/1"}' paternal.reads > paternal.reads_1 &
 awk '{print $1"/2"}' paternal.reads > paternal.reads_2 &
 
@@ -126,6 +131,7 @@ $seqtk subseq $MF2_R2_fq_gz paternal.reads_2 |gzip > paternal.reads_2.fq.gz &
 
 $seqtk subseq $MF2_R1_fq_gz maternal.reads_1 |gzip > maternal.reads_1.fq.gz &
 $seqtk subseq $MF2_R2_fq_gz maternal.reads_2 |gzip > maternal.reads_2.fq.gz &
-
 wait
-echo "HiC Trio Binning End: `date`"
+rm -rf paternal.reads_1 paternal.reads_2 maternal.reads_1 maternal.reads_2 
+
+echo "Hi-C Trio Binning End: `date`"
