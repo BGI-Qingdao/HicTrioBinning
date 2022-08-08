@@ -4,14 +4,17 @@ A multithread pipeline to bin Hi-C reads for trios.
 * Instruction:
 ---------------------------------------------------------------------------
 Input:
+
 		1. two haplotype-resolved assembled contigs
 		2. Hi-C reads for child
 		
 Output:	
+
 		1. haplotype-resolved Hi-C reads
 		2. two haplotype-resolved assembled scaffolds by Hi-C
 		
-Dependencies:		
+Dependencies:	
+
 		1. BWA
 		2. Seqkit
 		
@@ -22,6 +25,7 @@ Usage:
 		-S /path/to/seqtk -O /path/to/output/ -I 1
 		
 Option: 
+
 		-I < bwa index for haplotype assemblies: 1|0 > 
 		-M < input draft maternal-specific haplotype assembly for the child > 
 		-P < input draft paternal-specific haplotype assembly for the child > 
