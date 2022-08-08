@@ -3,9 +3,10 @@
 helpdoc(){
 		cat<<EOF
 Usage:
-		/usr/bin/bash HTB.sh -M MF2_MAT.fasta -P MF2_PAT.fasta \\
-		-1 MF2_R1.fq.gz -2 MF2_R2.fq.gz -N 10 -B /paht/to/bwa \\
-		-S /path/to/seqtk -O /path/to/output/ -I 1 
+
+		/usr/bin/bash HTB.sh -M Input_MAT_conitg.fasta -P Input_PAT_contig.fasta \
+		-1 Input_Hi-C_R1.fq.gz -2 Input_Hi-C_R2.fq.gz -N 10 -B /path/to/bwa \
+		-S /path/to/seqtk -O /path/to/output/ -I 1
 Option:
 		-I < assembly hap reference index: 1|0>
 		-M < maternal assembly hap fasta >
@@ -87,7 +88,7 @@ cut -f 1,2,3,6,12 HiC_PAT_MAP.R2.sam | perl -ane  \
 > HiC_PAT_MAP.R2.Info &
 wait
 
-rm -rf HiC_MAT_MAP.R1.sam HiC_MAT_MAP.R2.sam HiC_PAT_MAP.R1.sam HiC_PAT_MAP.R2.sam
+#rm -rf HiC_MAT_MAP.R1.sam HiC_MAT_MAP.R2.sam HiC_PAT_MAP.R1.sam HiC_PAT_MAP.R2.sam
 
 #### 02 get_read_score.sh
 awk 'BEGIN{name="";chr="";score=0;}{ if(NR>=1){ n=$1; chr=$3;if(n!=name && name!=""){printf("%s\t%s\t%f\n",name,ref,score);score=0;} name=n;if($2<256){ref=$3;score=(3*(log($4)/log(10))+(log($6)/log(10)) );} } }' \
@@ -104,9 +105,9 @@ HiC_PAT_MAP.R2.Info > HiC_PAT_MAP.R2.Info.score &
 wait
 
 #### 03 merge_pe_read_info.sh 
-join -o 1.1 2.1 1.2 2.2 1.3 2.3 -e 0 -a1 -a2  HiC_MAT_MAP.R1.Info.score HiC_MAT_MAP.R2.Info.score |awk '{if($3==$4) printf("%s\t%s\n",$1,$5+$6);}'  > HiC_MAT_MAP.R1R2.merge.score &
+join --nocheck-order -o 1.1 2.1 1.2 2.2 1.3 2.3 -e 0 -a1 -a2  HiC_MAT_MAP.R1.Info.score HiC_MAT_MAP.R2.Info.score |awk '{if($3==$4) printf("%s\t%s\n",$1,$5+$6);}'  > HiC_MAT_MAP.R1R2.merge.score &
 
-join -o 1.1 2.1 1.2 2.2 1.3 2.3 -e 0 -a1 -a2  HiC_PAT_MAP.R1.Info.score HiC_PAT_MAP.R2.Info.score |awk '{if($3==$4) printf("%s\t%s\n",$1,$5+$6);}'  > HiC_PAT_MAP.R1R2.merge.score &
+join --nocheck-order -o 1.1 2.1 1.2 2.2 1.3 2.3 -e 0 -a1 -a2  HiC_PAT_MAP.R1.Info.score HiC_PAT_MAP.R2.Info.score |awk '{if($3==$4) printf("%s\t%s\n",$1,$5+$6);}'  > HiC_PAT_MAP.R1R2.merge.score &
 
 wait
 
