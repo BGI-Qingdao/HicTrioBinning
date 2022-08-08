@@ -14,8 +14,7 @@ Input:
 		
 Output:	
 
-		1. haplotype-resolved Hi-C reads
-		2. two haplotype-resolved assembled scaffolds by Hi-C
+		two haplotype-resolved Hi-C reads for Hi-C assembly
 		
 Dependencies:	
 
