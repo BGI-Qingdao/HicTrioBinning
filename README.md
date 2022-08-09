@@ -18,9 +18,13 @@ Output:
 		
 Dependencies:	
 
-		1. BWA [bwa github](https://github.com/lh3/bwa) 
-		2. Seqkit [seqtk github](https://github.com/lh3/seqtk)
-		
+		1. BWA 
+[bwa github](https://github.com/lh3/bwa) 
+
+		2. Seqkit
+[seqtk github](https://github.com/lh3/seqtk)
+
+
 Usage: 
 
 		/usr/bin/bash HTB.sh -M Input_MAT_conitg.fasta -P Input_PAT_contig.fasta \
