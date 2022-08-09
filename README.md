@@ -21,7 +21,7 @@ Dependencies:
 		1. BWA 
 [bwa github](https://github.com/lh3/bwa) 
 
-		2. Seqkit
+		2. Seqtk
 [seqtk github](https://github.com/lh3/seqtk)
 
 
