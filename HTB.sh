@@ -16,6 +16,7 @@ Option:
 		-N < thread number : 20 (default) > 
 		-B < path to installed bwa > 
 		-S < path to installed seqtk > 
+		-O < output file path >
 		-h <help> 
 EOF
 }
