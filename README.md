@@ -14,7 +14,7 @@ Input:
 		
 Output:	
 
-		two haplotype-resolved Hi-C reads for Hi-C assembly
+		two haplotype-resolved Hi-C read sets for Hi-C assembly
 		
 Dependencies:	
 
