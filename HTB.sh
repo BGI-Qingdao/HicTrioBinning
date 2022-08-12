@@ -118,6 +118,7 @@ awk '{if($1==0) name =$2; else name = $1 ; if($3>$4)print name>"paternal.reads";
 wait
 
 #### 05 extract_reads.sh
+
 awk '{print $1"/1"}' paternal.reads > paternal.reads_1 &
 awk '{print $1"/2"}' paternal.reads > paternal.reads_2 &
 
@@ -125,6 +126,7 @@ awk '{print $1"/1"}' maternal.reads > maternal.reads_1 &
 awk '{print $1"/2"}' maternal.reads > maternal.reads_2 &
 
 wait
+
 awk '{print $1"/1"}' homo.reads >> paternal.reads_1 &
 awk '{print $1"/2"}' homo.reads >> paternal.reads_2 &
 
@@ -138,7 +140,7 @@ $seqtk subseq $MF2_R2_fq_gz paternal.reads_2 |gzip > paternal.reads_2.fq.gz &
 $seqtk subseq $MF2_R1_fq_gz maternal.reads_1 |gzip > maternal.reads_1.fq.gz &
 $seqtk subseq $MF2_R2_fq_gz maternal.reads_2 |gzip > maternal.reads_2.fq.gz &
 wait
-rm -rf paternal.reads_1 paternal.reads_2 maternal.reads_1 maternal.reads_2 
+
+#rm -rf paternal.reads_1 paternal.reads_2 maternal.reads_1 maternal.reads_2
 
 echo "Hi-C Trio Binning End: `date`"
-
