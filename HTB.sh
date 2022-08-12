@@ -122,9 +122,15 @@ wait
 seqtk=/share/app/seqtk/1.3/seqtk
 awk '{print $1"/1"}' paternal.reads > paternal.reads_1 &
 awk '{print $1"/2"}' paternal.reads > paternal.reads_2 &
+awk '{print $1"/1"}' homo.reads >> paternal.reads_1 &
+awk '{print $1"/2"}' homo.reads >> paternal.reads_2 &
+
 
 awk '{print $1"/1"}' maternal.reads > maternal.reads_1 &
 awk '{print $1"/2"}' maternal.reads > maternal.reads_2 &
+awk '{print $1"/1"}' homo.reads >> maternal.reads_1 &
+awk '{print $1"/2"}' homo.reads >> maternal.reads_2 &
+
 wait
 
 $seqtk subseq $MF2_R1_fq_gz paternal.reads_1 |gzip > paternal.reads_1.fq.gz &
