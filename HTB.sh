@@ -16,7 +16,7 @@ Option:
 		-N < thread number : 20 (default) > 
 		-B < path to installed bwa > 
 		-S < path to installed seqtk > 
-		-O < output file path >
+		-O < path to output file >
 		-h <help> 
 EOF
 }
@@ -53,7 +53,8 @@ then
 fi
 
 echo "Hi-C Trio Binning End: `date`"
-mkdir $outdir && cd $outdir
+mkdir $outdir 
+cd $outdir
 
 #### 00 get map quality
 if [ $Index = 1 ]
@@ -73,22 +74,20 @@ wait
 #### 01 get_info
 cut -f 1,2,3,6,12 HiC_MAT_MAP.R1.sam | perl -ane  \
 'if(/NM:i:(\d+)/){ $n=$1;$m=$g=$o=0;$m+=$1 while/(\d+)M/g;$g+=$1,++$o while/(\d+)[ID]/g; chomp ;@a=split;print($a[0],"\t",$a[1],"\t",$a[2], "\t", 1-($n-$g+$o)/($m+$o) ,"\t",($m+$o)-($n-$g+$o),  "\t",($m+$o),"\n")}' \
-> HiC_MAT_MAP.R1.Info &
+> HiC_MAT_MAP.R1.Info && rm HiC_MAT_MAP.R1.sam &
 
 cut -f 1,2,3,6,12 HiC_MAT_MAP.R2.sam | perl -ane  \
 'if(/NM:i:(\d+)/){ $n=$1;$m=$g=$o=0;$m+=$1 while/(\d+)M/g;$g+=$1,++$o while/(\d+)[ID]/g; chomp ;@a=split;print($a[0],"\t",$a[1],"\t",$a[2], "\t", 1-($n-$g+$o)/($m+$o) ,"\t",($m+$o)-($n-$g+$o),  "\t",($m+$o),"\n")}' \
-> HiC_MAT_MAP.R2.Info &
+> HiC_MAT_MAP.R2.Info && rm HiC_MAT_MAP.R2.sam & 
 
 cut -f 1,2,3,6,12 HiC_PAT_MAP.R1.sam | perl -ane  \
 'if(/NM:i:(\d+)/){ $n=$1;$m=$g=$o=0;$m+=$1 while/(\d+)M/g;$g+=$1,++$o while/(\d+)[ID]/g; chomp ;@a=split;print($a[0],"\t",$a[1],"\t",$a[2], "\t", 1-($n-$g+$o)/($m+$o) ,"\t",($m+$o)-($n-$g+$o),  "\t",($m+$o),"\n")}' \
-> HiC_PAT_MAP.R1.Info &
+> HiC_PAT_MAP.R1.Info && rm HiC_PAT_MAP.R1.sam &
 
 cut -f 1,2,3,6,12 HiC_PAT_MAP.R2.sam | perl -ane  \
 'if(/NM:i:(\d+)/){ $n=$1;$m=$g=$o=0;$m+=$1 while/(\d+)M/g;$g+=$1,++$o while/(\d+)[ID]/g; chomp ;@a=split;print($a[0],"\t",$a[1],"\t",$a[2], "\t", 1-($n-$g+$o)/($m+$o) ,"\t",($m+$o)-($n-$g+$o),  "\t",($m+$o),"\n")}' \
-> HiC_PAT_MAP.R2.Info &
+> HiC_PAT_MAP.R2.Info && rm HiC_PAT_MAP.R2.sam &
 wait
-
-rm -rf HiC_MAT_MAP.R1.sam HiC_MAT_MAP.R2.sam HiC_PAT_MAP.R1.sam HiC_PAT_MAP.R2.sam
 
 #### 02 get_read_score.sh
 awk 'BEGIN{name="";chr="";score=0;}{ if(NR>=1){ n=$1; chr=$3;if(n!=name && name!=""){printf("%s\t%s\t%f\n",name,ref,score);score=0;} name=n;if($2<256){ref=$3;score=(3*(log($4)/log(10))+(log($6)/log(10)) );} } }' \
@@ -119,17 +118,13 @@ awk '{if($1==0) name =$2; else name = $1 ; if($3>$4)print name>"paternal.reads";
 wait
 
 #### 05 extract_reads.sh
-
 awk '{print $1"/1"}' paternal.reads > paternal.reads_1 &
 awk '{print $1"/2"}' paternal.reads > paternal.reads_2 &
-
-
 
 awk '{print $1"/1"}' maternal.reads > maternal.reads_1 &
 awk '{print $1"/2"}' maternal.reads > maternal.reads_2 &
 
 wait
-
 awk '{print $1"/1"}' homo.reads >> paternal.reads_1 &
 awk '{print $1"/2"}' homo.reads >> paternal.reads_2 &
 
@@ -146,3 +141,4 @@ wait
 rm -rf paternal.reads_1 paternal.reads_2 maternal.reads_1 maternal.reads_2 
 
 echo "Hi-C Trio Binning End: `date`"
+
