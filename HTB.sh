@@ -52,7 +52,7 @@ then
 	exit 1
 fi
 
-echo "Hi-C Trio Binning End: `date`"
+echo "Hi-C Trio Binning Start: `date`"
 mkdir $outdir 
 cd $outdir
 
@@ -71,22 +71,24 @@ $bwa mem -t $n_thread $MF2_PAT_ASM_fasta $MF2_R1_fq_gz 1> HiC_PAT_MAP.R1.sam 2> 
 $bwa mem -t $n_thread $MF2_PAT_ASM_fasta $MF2_R2_fq_gz 1> HiC_PAT_MAP.R2.sam 2> HiC_PAT_MAP.R2.log &
 wait
 
+
 #### 01 get_info
 cut -f 1,2,3,6,12 HiC_MAT_MAP.R1.sam | perl -ane  \
-'if(/NM:i:(\d+)/){ $n=$1;$m=$g=$o=0;$m+=$1 while/(\d+)M/g;$g+=$1,++$o while/(\d+)[ID]/g; chomp ;@a=split;print($a[0],"\t",$a[1],"\t",$a[2], "\t", 1-($n-$g+$o)/($m+$o) ,"\t",($m+$o)-($n-$g+$o),  "\t",($m+$o),"\n")}' \
+'if(/NM:i:(\d+)/){ $n=$1;$m=$g=$o=0;$m+=$1 while/(\d+)M/g; $g+=$1,++$o while/(\d+)[ID]/g; chomp; @a=split; print($a[0],"\t",$a[1],"\t",$a[2], "\t", 1-($n-$g+$o)/($m+$o) ,"\t",($m+$o)-($n-$g+$o),  "\t",($m+$o),"\n")} elsif(/AS:i:(\d+)/){ chomp; @a=split; print($a[0],"\t",$a[1],"\t",NA, "\t", 1, "\t", 0, "\t", 1, "\n")};' \
 > HiC_MAT_MAP.R1.Info && rm HiC_MAT_MAP.R1.sam &
 
 cut -f 1,2,3,6,12 HiC_MAT_MAP.R2.sam | perl -ane  \
-'if(/NM:i:(\d+)/){ $n=$1;$m=$g=$o=0;$m+=$1 while/(\d+)M/g;$g+=$1,++$o while/(\d+)[ID]/g; chomp ;@a=split;print($a[0],"\t",$a[1],"\t",$a[2], "\t", 1-($n-$g+$o)/($m+$o) ,"\t",($m+$o)-($n-$g+$o),  "\t",($m+$o),"\n")}' \
+'if(/NM:i:(\d+)/){ $n=$1;$m=$g=$o=0;$m+=$1 while/(\d+)M/g; $g+=$1,++$o while/(\d+)[ID]/g; chomp; @a=split; print($a[0],"\t",$a[1],"\t",$a[2], "\t", 1-($n-$g+$o)/($m+$o) ,"\t",($m+$o)-($n-$g+$o),  "\t",($m+$o),"\n")} elsif(/AS:i:(\d+)/){ chomp; @a=split; print($a[0],"\t",$a[1],"\t",NA, "\t", 1, "\t", 0, "\t", 1, "\n")};' \
 > HiC_MAT_MAP.R2.Info && rm HiC_MAT_MAP.R2.sam & 
 
 cut -f 1,2,3,6,12 HiC_PAT_MAP.R1.sam | perl -ane  \
-'if(/NM:i:(\d+)/){ $n=$1;$m=$g=$o=0;$m+=$1 while/(\d+)M/g;$g+=$1,++$o while/(\d+)[ID]/g; chomp ;@a=split;print($a[0],"\t",$a[1],"\t",$a[2], "\t", 1-($n-$g+$o)/($m+$o) ,"\t",($m+$o)-($n-$g+$o),  "\t",($m+$o),"\n")}' \
+'if(/NM:i:(\d+)/){ $n=$1;$m=$g=$o=0;$m+=$1 while/(\d+)M/g; $g+=$1,++$o while/(\d+)[ID]/g; chomp; @a=split; print($a[0],"\t",$a[1],"\t",$a[2], "\t", 1-($n-$g+$o)/($m+$o) ,"\t",($m+$o)-($n-$g+$o),  "\t",($m+$o),"\n")} elsif(/AS:i:(\d+)/){ chomp; @a=split; print($a[0],"\t",$a[1],"\t",NA, "\t", 1, "\t", 0, "\t", 1, "\n")};' \
 > HiC_PAT_MAP.R1.Info && rm HiC_PAT_MAP.R1.sam &
 
 cut -f 1,2,3,6,12 HiC_PAT_MAP.R2.sam | perl -ane  \
-'if(/NM:i:(\d+)/){ $n=$1;$m=$g=$o=0;$m+=$1 while/(\d+)M/g;$g+=$1,++$o while/(\d+)[ID]/g; chomp ;@a=split;print($a[0],"\t",$a[1],"\t",$a[2], "\t", 1-($n-$g+$o)/($m+$o) ,"\t",($m+$o)-($n-$g+$o),  "\t",($m+$o),"\n")}' \
+'if(/NM:i:(\d+)/){ $n=$1;$m=$g=$o=0;$m+=$1 while/(\d+)M/g; $g+=$1,++$o while/(\d+)[ID]/g; chomp; @a=split; print($a[0],"\t",$a[1],"\t",$a[2], "\t", 1-($n-$g+$o)/($m+$o) ,"\t",($m+$o)-($n-$g+$o),  "\t",($m+$o),"\n")} elsif(/AS:i:(\d+)/){ chomp; @a=split; print($a[0],"\t",$a[1],"\t",NA, "\t", 1, "\t", 0, "\t", 1, "\n")};' \
 > HiC_PAT_MAP.R2.Info && rm HiC_PAT_MAP.R2.sam &
+
 wait
 
 #### 02 get_read_score.sh
@@ -107,7 +109,6 @@ wait
 join --nocheck-order -o 1.1 2.1 1.2 2.2 1.3 2.3 -e 0 -a1 -a2  HiC_MAT_MAP.R1.Info.score HiC_MAT_MAP.R2.Info.score |awk '{printf("%s\t%s\n",$1,$5+$6);}'  > HiC_MAT_MAP.R1R2.merge.score &
 
 join --nocheck-order -o 1.1 2.1 1.2 2.2 1.3 2.3 -e 0 -a1 -a2  HiC_PAT_MAP.R1.Info.score HiC_PAT_MAP.R2.Info.score |awk '{printf("%s\t%s\n",$1,$5+$6);}'  > HiC_PAT_MAP.R1R2.merge.score &
-
 wait
 
 #### 04 select_reads.sh
@@ -142,5 +143,4 @@ $seqtk subseq $MF2_R2_fq_gz maternal.reads_2 |gzip > maternal.reads_2.fq.gz &
 wait
 
 #rm -rf paternal.reads_1 paternal.reads_2 maternal.reads_1 maternal.reads_2
-
 echo "Hi-C Trio Binning End: `date`"
