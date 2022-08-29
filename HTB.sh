@@ -104,9 +104,9 @@ HiC_PAT_MAP.R2.Info > HiC_PAT_MAP.R2.Info.score &
 wait
 
 #### 03 merge_pe_read_info.sh 
-join --nocheck-order -o 1.1 2.1 1.2 2.2 1.3 2.3 -e 0 -a1 -a2  HiC_MAT_MAP.R1.Info.score HiC_MAT_MAP.R2.Info.score |awk '{if($3==$4) printf("%s\t%s\n",$1,$5+$6);}'  > HiC_MAT_MAP.R1R2.merge.score &
+join --nocheck-order -o 1.1 2.1 1.2 2.2 1.3 2.3 -e 0 -a1 -a2  HiC_MAT_MAP.R1.Info.score HiC_MAT_MAP.R2.Info.score |awk '{printf("%s\t%s\n",$1,$5+$6);}'  > HiC_MAT_MAP.R1R2.merge.score &
 
-join --nocheck-order -o 1.1 2.1 1.2 2.2 1.3 2.3 -e 0 -a1 -a2  HiC_PAT_MAP.R1.Info.score HiC_PAT_MAP.R2.Info.score |awk '{if($3==$4) printf("%s\t%s\n",$1,$5+$6);}'  > HiC_PAT_MAP.R1R2.merge.score &
+join --nocheck-order -o 1.1 2.1 1.2 2.2 1.3 2.3 -e 0 -a1 -a2  HiC_PAT_MAP.R1.Info.score HiC_PAT_MAP.R2.Info.score |awk '{printf("%s\t%s\n",$1,$5+$6);}'  > HiC_PAT_MAP.R1R2.merge.score &
 
 wait
 
