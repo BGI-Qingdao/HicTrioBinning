@@ -135,11 +135,11 @@ awk '{print $1"/1"}' homo.reads >> maternal.reads_1 &
 awk '{print $1"/2"}' homo.reads >> maternal.reads_2 &
 wait
 
-$seqtk subseq $MF2_R1_fq_gz paternal.reads_1 |gzip > paternal.reads_R1.fq.gz &
-$seqtk subseq $MF2_R2_fq_gz paternal.reads_2 |gzip > paternal.reads_R2.fq.gz &
+$seqtk subseq $MF2_R1_fq_gz paternal.reads_1 |gzip > paternal.reads_R1.fq.gz && echo "paternal R1 done!: `date`" &
+$seqtk subseq $MF2_R2_fq_gz paternal.reads_2 |gzip > paternal.reads_R2.fq.gz && echo "paternal R2 done!: `date`" &
 
-$seqtk subseq $MF2_R1_fq_gz maternal.reads_1 |gzip > maternal.reads_R1.fq.gz &
-$seqtk subseq $MF2_R2_fq_gz maternal.reads_2 |gzip > maternal.reads_R2.fq.gz &
+$seqtk subseq $MF2_R1_fq_gz maternal.reads_1 |gzip > maternal.reads_R1.fq.gz && echo "maternal R1 done!: `date`" &
+$seqtk subseq $MF2_R2_fq_gz maternal.reads_2 |gzip > maternal.reads_R2.fq.gz && echo "maternal R2 done!: `date`" &
 wait
 
 #rm -rf paternal.reads_1 paternal.reads_2 maternal.reads_1 maternal.reads_2
